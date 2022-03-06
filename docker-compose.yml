@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db: 
+    container_name: db_chapa_quente
+    image: mongo
+    ports:
+      - "27017:27027"
+    command: mongod --quiet --logpath /dev/null
+
+  api:
+    container_name: backend_chapa_quente    
+    build: .
+    restart: always
+    command: npm start
+    ports:
+      - "3333:3333"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    
