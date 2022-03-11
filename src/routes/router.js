@@ -1,5 +1,9 @@
 const { Router } = require('express');
 const { ClienteController } = require('../controller/clienteController');
+const { EntregadorController } = require('../controller/entregadorController');
+const {
+  FuncionarioController,
+} = require('../controller/funcionarioController');
 const verificaToken = require('../midllewares/verificaToken');
 
 const routes = new Router();
@@ -22,6 +26,40 @@ routes.put('/cliente/:id', verificaToken, (req, res) =>
 );
 routes.post('/cliente/signin', (req, res) =>
   clienteController.signIn(req, res),
+);
+
+// Entregador
+const entregadorController = new EntregadorController();
+routes.post('/entregador', (req, res) => entregadorController.create(req, res));
+routes.get('/entregador/all', verificaToken, (req, res) =>
+  entregadorController.index(req, res),
+);
+routes.delete('/entregador/:id', verificaToken, (req, res) =>
+  entregadorController.destroy(req, res),
+);
+routes.put('/entregador/:id', verificaToken, (req, res) =>
+  entregadorController.update(req, res),
+);
+routes.post('/entregador/signin', (req, res) =>
+  entregadorController.signIn(req, res),
+);
+
+// Funcionário
+const funcionarioController = new FuncionarioController();
+routes.post('/funcionario', (req, res) =>
+  funcionarioController.create(req, res),
+);
+routes.get('/funcionario/all', verificaToken, (req, res) =>
+  funcionarioController.index(req, res),
+);
+routes.delete('/funcionario/:id', verificaToken, (req, res) =>
+  funcionarioController.destroy(req, res),
+);
+routes.put('/funcionario/:id', verificaToken, (req, res) =>
+  funcionarioController.update(req, res),
+);
+routes.post('/funcionario/signin', (req, res) =>
+  funcionarioController.signIn(req, res),
 );
 
 module.exports = routes;
