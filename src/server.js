@@ -31,5 +31,5 @@ try {
 app.use(cors());
 app.use(express.json());
 
-//Rotas
+// Rotas
 app.use('/', router);

@@ -1,6 +1,12 @@
 const { Cliente } = require('../model/cliente');
+const jwt = require('../utils/jwt');
+const PessoaController = require('./pessoaController');
 
-class ClienteController {
+class ClienteController extends PessoaController {
+  constructor() {
+    super({ Model: Cliente });
+  }
+
   async create(req, res) {
     const { nome, telefone, email, senha, cpf, endereco } = req.body;
 
@@ -22,42 +28,24 @@ class ClienteController {
     }
   }
 
-  async update(req, res) {
-    const { email } = req.params;
-    const updateParams = req.body;
+  async signIn(req, res) {
+    const { email, senha } = req.body;
 
     try {
-      const cliente = await Cliente.findOneAndUpdate({ email }, updateParams, {
-        new: true,
-      });
+      const cliente = await Cliente.findOne({ email });
 
-      res.send(cliente);
+      if (!cliente)
+        throw new Error(`Não foi achado nenhum cliente com email ${email}`);
+
+      if (cliente.senha !== senha) throw new Error('Senha incorreta');
+
+      const token = jwt.sign({ id: cliente.id });
+
+      res.send({ cliente, token });
     } catch (err) {
-      res.send({ err: err.message });
-    }
-  }
-
-  async index(_req, res) {
-    try {
-      const result = await Cliente.find();
-
-      res.send(result);
-    } catch (err) {
-      res.send({ err: err.message });
-    }
-  }
-
-  async destroy(req, res) {
-    const { email } = req.params;
-
-    try {
-      await Cliente.deleteOne({ email });
-
-      res.status(204).send();
-    } catch (err) {
-      res.send({ erro: err.message });
+      res.status(400).send({ erro: err.message });
     }
   }
 }
 
-module.exports = { ClienteController: new ClienteController() };
+module.exports = { ClienteController };
