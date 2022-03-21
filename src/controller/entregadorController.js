@@ -11,7 +11,7 @@ class EntregadorController extends PessoaController {
   }
 
   async create(req, res) {
-    const { nome, telefone, email, senha, cpf, placaMoto } = req.body();
+    const { nome, telefone, email, senha, cpf, placaMoto } = req.body;
 
     const entregador = new Entregador({
       nome,
