@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/UnBArqDsw2021-2/2021.2_g1_chapa_quente_backend#readme",
   "dependencies": {
+    "babel-eslint": "^10.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4"
   },
   "devDependencies": {
@@ -32,7 +34,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.3",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "prettier": "^2.1.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.1.2"
   }
 }

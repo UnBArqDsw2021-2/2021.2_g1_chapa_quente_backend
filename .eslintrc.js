@@ -2,11 +2,7 @@ module.exports = {
   env: {
     es6: true,
   },
-  extends: [
-    'airbnb',
-    'prettier',
-    'prettier/react',
-  ],
+  extends: ['airbnb', 'prettier', 'prettier/react'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -20,10 +16,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'prettier',
-  ],
+  plugins: ['react', 'prettier'],
   ignorePatterns: ['src/tests/*', 'cypress/'],
   rules: {
     'react/jsx-filename-extension': [
@@ -39,9 +32,10 @@ module.exports = {
     'react/prop-types': 'warn',
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
-    'no-underscore-dangle':'off',
-    'jsx-a11y/label-has-associated-control':'warn',
-    'import/no-named-as-default':'off',
-    'no-undef':'warn'
+    'no-underscore-dangle': 'off',
+    'jsx-a11y/label-has-associated-control': 'warn',
+    'import/no-named-as-default': 'off',
+    'class-methods-use-this': 'off',
+    'no-undef': 'warn',
   },
 };
