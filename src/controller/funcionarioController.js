@@ -1,9 +1,13 @@
 const { Funcionario } = require('../model/funcionario');
-const { PessoaController } = require('./pessoaController');
+const PessoaController = require('./pessoaController');
 
 class FuncionarioController extends PessoaController {
-  constructor() {
-    super({ Model: Funcionario });
+  constructor(options) {
+    if (options) {
+      super(options)
+    } else {
+      super({ Model: Funcionario });
+    }
   }
 
   async create(req, res) {

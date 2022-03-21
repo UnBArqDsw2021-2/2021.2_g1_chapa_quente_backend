@@ -1,9 +1,13 @@
 const { Entregador } = require('../model/entregador');
-const { PessoaController } = require('./pessoaController');
+const PessoaController = require('./pessoaController');
 
 class EntregadorController extends PessoaController {
-  constructor() {
-    super({ Model: Entregador });
+  constructor(options) {
+    if (options) {
+      super(options)
+    } else {
+      super({ Model: Entregador });
+    }
   }
 
   async create(req, res) {

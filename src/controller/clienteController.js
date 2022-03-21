@@ -3,9 +3,14 @@ const jwt = require('../utils/jwt');
 const PessoaController = require('./pessoaController');
 
 class ClienteController extends PessoaController {
-  constructor() {
-    super({ Model: Cliente });
+  constructor(options) {
+    if (options) {
+      super(options)
+    } else {
+      super({ Model: Cliente });
+    }
   }
+  
 
   async create(req, res) {
     const { nome, telefone, email, senha, cpf, endereco } = req.body;
