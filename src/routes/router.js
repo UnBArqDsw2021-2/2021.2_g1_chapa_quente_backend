@@ -39,7 +39,7 @@ routes.get('/entregador/all', verificaToken, (req, res) =>
   entregadorController.index(req, res),
 );
 routes.get('/entregador/profile', verificaToken, (req, res) =>
-  entregadorController.index(req, res),
+  entregadorController.profile(req, res),
 );
 routes.delete('/entregador/:email', verificaToken, (req, res) =>
   entregadorController.destroy(req, res),
