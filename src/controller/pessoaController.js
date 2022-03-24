@@ -58,6 +58,17 @@ class PessoaController {
     }
   }
 
+  async profile(req, res) {
+    const { email } = req.params;
+    try {
+      const result = await this.Model.findOne({email});
+
+      res.send(result);
+    } catch (err) {
+      res.send({ err: err.message });
+    }
+  }
+
   async update(req, res) {
     const { email } = req.params;
     const updateParams = req.body;
