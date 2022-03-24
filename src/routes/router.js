@@ -6,6 +6,7 @@ const {
 } = require('../controller/funcionarioController');
 const AutenticacaoController = require('../controller/autenticacaoController');
 const verificaToken = require('../midllewares/verificaToken');
+const autorizaFuncionario = require('../midllewares/autorizaFuncionario');
 const { CardapioController } = require('../controller/cardapioController');
 
 const routes = new Router();
@@ -61,19 +62,27 @@ routes.put('/funcionario/:email', verificaToken, (req, res) =>
 // Cardapio
 const cardapioController = new CardapioController();
 routes.get('/cardapio/all', verificaToken, (req, res) => {
-  cardapioController.listaItemsCardapio(req, res)
-})
+  cardapioController.listaItemsCardapio(req, res);
+});
 routes.get('/cardapio/:id', verificaToken, (req, res) => {
-  cardapioController.getItemCardapio(req, res)
-})
-routes.post('/cardapio/', verificaToken, (req, res) => {
-  cardapioController.cadastrarItemNoCardapio(req, res)
-})
-routes.put('/cardapio/:id', verificaToken, (req, res) => {
-  cardapioController.atualizarItem(req, res)
-})
-routes.delete('/cardapio/:id', verificaToken, (req, res) => {
-  cardapioController.removerItemCardapio(req, res)
-})
+  cardapioController.getItemCardapio(req, res);
+});
+routes.post('/cardapio/', [verificaToken, autorizaFuncionario], (req, res) => {
+  cardapioController.cadastrarItemNoCardapio(req, res);
+});
+routes.put(
+  '/cardapio/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => {
+    cardapioController.atualizarItem(req, res);
+  },
+);
+routes.delete(
+  '/cardapio/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => {
+    cardapioController.removerItemCardapio(req, res);
+  },
+);
 
 module.exports = routes;
