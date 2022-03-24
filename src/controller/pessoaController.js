@@ -61,9 +61,7 @@ class PessoaController {
   async profile(req, res) {
     const { id } = req.pessoaId;
     try {
-      if(result.id !== id) throw new Error('perfil inválido');
-      
-      const result = await this.Model.findOne({id});
+      const result = await this.Model.findById(id);
 
       res.send(result);
     } catch (err) {
