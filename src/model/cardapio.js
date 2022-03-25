@@ -1,22 +1,30 @@
 const mongoose = require('mongoose');
 
 const cardapioSchema = new mongoose.Schema({
-  nome: {
-    type: String,
-    require: true,
+    descricao: { 
+        type: String,
+        required: true,
+    },
+    preco: {
+        type: Number,
+        required: true,
+    },
+    tipo: { 
+        type: String,
+        required: true,
+    },
+    desconto: { 
+        type: Number,
+        required: true, 
+    },
+    isAvailable: {
+        type: Boolean,
+        required: true
+    }
   },
-  descricao: {
-    type: String,
-    require: true
-  },
-  preco: {
-    type: Number,
-    require: true
-  },
-  imagem: {
-    type: String,
-    require: false
-  },
-});
+  { collection: 'cardapio' },
+);
 
-module.exports = mongoose.model('Cardapio', cardapioSchema);
+const Cardapio = mongoose.model('Cardapio', cardapioSchema);
+
+module.exports = { Cardapio, cardapioSchema };

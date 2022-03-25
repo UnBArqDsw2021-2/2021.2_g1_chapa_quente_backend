@@ -1,65 +1,68 @@
-const Cardapio = require('../model/cardapio');
+const res = require('express/lib/response');
+const { Cardapio } = require('../model/cardapio');
 
 class CardapioController {
-  constructor() {}
+  Model;
 
-  async listaItemsCardapio(req, res) {
-    const itemsCardapio = await Cardapio.find();
-    return res.status(201).send(itemsCardapio);
+  constructor(options) {
+    if (this.constructor === CardapioController) {
+      throw new Error('Classe Abstrata não pode ser instanciada!');
+    }
+    const { Model } = options;
+
+    if (Model) {
+      this.Model = Model;
+    } else {
+      this.Model = Cardapio;
+    }
   }
 
-  async getItemCardapio(req, res) {
+  async itemCardapio(req, res) {
     const { id } = req.params;
-    const itemCardapio = await Cardapio.findOne({ _id: id });
-    return res.status(200).send(itemCardapio);
+
+    try {
+      const itens = await this.Model.findOne({ id });
+      res.send(itens);
+    } catch (err) {
+      res.send({ err: err.message });
+    }
   }
 
-  async cadastrarItemNoCardapio(req, res) {
-    const { nome, descricao, preco, imagem } = req.body;
+  async itensCardapio(req, res) {
     try {
-      const novoItem = await Cardapio.create({
-        nome,
-        descricao,
-        preco,
-        imagem,
-      });
-      return res.status(201).send(novoItem);
+      const result = await this.Model.find();
+      res.send(result);
     } catch (err) {
-      return res.status(400).send(err);
+      res.send({ err: err.message });
     }
   }
 
   async atualizarItem(req, res) {
     const { id } = req.params;
-    const { nome, descricao, preco, imagem } = req.body;
+    const updateParams = req.body;
 
     try {
-      const itemCadastrado = await Cardapio.findOneAndUpdate(
-        { _id: id },
-        {
-          nome,
-          descricao,
-          preco,
-          imagem,
-        },
+      const itemAtualizado = await this.Model.findOneAndUpdate(
+        { id },
+        updateParams,
         { new: true },
       );
-      return res.status(200).send(itemCadastrado);
+      res.send(itemAtualizado);
     } catch (err) {
-      return res.status(400).send({ message: err });
+      res.send({ err: err.message });
     }
   }
 
-  async removerItemCardapio(req, res) {
+  async deletarItem(req, res) {
     const { id } = req.params;
 
     try {
-      const deletedItem = await Cardapio.deleteOne({ _id: id });
-      return res.status(200).send(deletedItem);
+      const itemRemovido = await this.Model.deleteOne({ id });
+      res.status(204).send(itemRemovido);
     } catch (err) {
-      return res.status(400).send({ message: err });
+      res.send({ erro: err.message });
     }
   }
 }
 
-module.exports = { CardapioController };
+module.exports = CardapioController;
