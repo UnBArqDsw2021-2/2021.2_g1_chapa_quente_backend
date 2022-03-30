@@ -12,6 +12,8 @@ const { AdicionalController } = require('../controller/adicionalController');
 const { SobremesaController } = require('../controller/sobremesaController');
 const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
+const PessoaController = require('../controller/pessoaController');
+const { PedidoController } = require('../controller/pedidoController');
 
 const routes = new Router();
 
@@ -151,6 +153,24 @@ routes.put('/sobremesa/update/:id', [verificaToken, autorizaFuncionario], (req, 
 });
 routes.delete('/sobremesa/delete/:id', [verificaToken, autorizaFuncionario], (req, res) => {
   sobremesaController.deletarItem(req, res);
+});
+
+// Pedido
+const pedidoController = new PedidoController();
+routes.get('/order/', verificaToken, (req, res) => {
+  pedidoController.getOrders(req, res);
+});
+routes.get('/order/:id', verificaToken, (req, res) => {
+  pedidoController.getOrder(req, res);
+});
+routes.post('/order/create', verificaToken, (req, res) => {
+  pedidoController.createOrder(req, res);
+});
+routes.put('/order/update/:id', [verificaToken, autorizaFuncionario], (req, res) => {
+  pedidoController.updateOrder(req, res);
+});
+routes.delete('/order/delete/:id', [verificaToken, autorizaFuncionario], (req, res) => {
+  pedidoController.deleteOrder(req, res);
 });
 
 module.exports = routes;
