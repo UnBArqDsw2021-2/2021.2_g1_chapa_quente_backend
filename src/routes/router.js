@@ -12,7 +12,6 @@ const { AdicionalController } = require('../controller/adicionalController');
 const { SobremesaController } = require('../controller/sobremesaController');
 const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
-const PessoaController = require('../controller/pessoaController');
 const { PedidoController } = require('../controller/pedidoController');
 
 const routes = new Router();
@@ -157,7 +156,7 @@ routes.delete('/sobremesa/delete/:id', [verificaToken, autorizaFuncionario], (re
 
 // Pedido
 const pedidoController = new PedidoController();
-routes.get('/order/', verificaToken, (req, res) => {
+routes.get('/order', verificaToken, (req, res) => {
   pedidoController.getOrders(req, res);
 });
 routes.get('/order/:id', verificaToken, (req, res) => {

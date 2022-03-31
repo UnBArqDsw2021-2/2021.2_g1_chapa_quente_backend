@@ -15,24 +15,19 @@ const pedidoSchema = new mongoose.Schema(
       type: String,
     },
     combo: {
-      default: [],
-      type: Array,
+      type: Object,
     },
     sanduiche: {
-      default: [],
-      type: Array,
+      type: Object,
     },
     bebida: {
-      default: [],
-      type: Array,
+      type: Object,
     },
     acompanhamento: {
-      default: [],
-      type: Array,
+      type: Object,
     },
     sobremesa: {
-      default: [],
-      type: Array,
+      type: Object,
     },
     cupom: {
       type: String,
@@ -41,8 +36,8 @@ const pedidoSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    cliente: {
-      type: String,
+    clienteId: {
+      type: mongoose.Types.ObjectId,
       required: true,
     },
     entregador: {

@@ -2,6 +2,7 @@ const { Pedido } = require('../model/pedido');
 
 class PedidoController {
     Model;
+
     constructor() {
         this.Model = Pedido;
     }
@@ -27,7 +28,6 @@ class PedidoController {
 
   async createOrder(req, res) {
     const {
-      estado,
       combo,
       sanduiche,
       bebida,
@@ -35,13 +35,13 @@ class PedidoController {
       sobremesa,
       cupom,
       valorTotal,
-      cliente,
+      clienteId,
       entregador,
       retiradaLocal,
     } = req.body;
 
-    const createdOrder = this.Model({
-      estado,
+    const createdOrder = new this.Model({
+      estado: 'Pronto para fazer',
       combo,
       sanduiche,
       bebida,
@@ -49,7 +49,7 @@ class PedidoController {
       sobremesa,
       cupom,
       valorTotal,
-      cliente,
+      clienteId,
       entregador,
       retiradaLocal,
     });
