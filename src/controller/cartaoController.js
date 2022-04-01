@@ -1,9 +1,12 @@
-const {Cartao} = require('../model/cartao');
+const { Cartao } = require('../model/cartao');
 
 class CartaoController {
     Model;
 
-    
+    constructor() {
+        this.Model = Cartao;
+    }
+
     async create(req, res) {
         const { numero, titular, cvc, validade, bandeira } = req.body;
 
@@ -66,4 +69,4 @@ class CartaoController {
     }
 }
 
-module.exports = CartaoController;
+module.exports = { CartaoController };
