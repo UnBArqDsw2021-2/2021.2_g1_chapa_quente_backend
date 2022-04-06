@@ -15,6 +15,7 @@ const { SobremesaController } = require('../controller/sobremesaController');
 const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
 const { PedidoController } = require('../controller/pedidoController');
+const { CartaoController } = require('../controller/cartaoController');
 
 const routes = new Router();
 
@@ -68,7 +69,7 @@ routes.put('/funcionario/:email', verificaToken, (req, res) =>
 
 // Acompanhamento
 const acompanhamentoController = new AcompanhamentoController();
-routes.get('/acompanhamento', verificaToken, (req, res) => {
+routes.get('/acompanhamento', (req, res) => {
   acompanhamentoController.itensCardapio(req, res);
 });
 routes.get('/acompanhamento/:id', verificaToken, (req, res) => {
@@ -128,7 +129,7 @@ routes.delete(
 
 // Bebida
 const bebidaController = new BebidaController();
-routes.get('/bebida/', verificaToken, (req, res) => {
+routes.get('/bebida/', (req, res) => {
   bebidaController.itensCardapio(req, res);
 });
 routes.get('/bebida/:id', verificaToken, (req, res) => {
@@ -158,7 +159,7 @@ routes.delete(
 
 // Sanduiche
 const sanduicheController = new SanduicheController();
-routes.get('/sanduiche/', verificaToken, (req, res) => {
+routes.get('/sanduiche/', (req, res) => {
   sanduicheController.itensCardapio(req, res);
 });
 routes.get('/sanduiche/:id', verificaToken, (req, res) => {
@@ -256,5 +257,20 @@ routes.post(
   [verificaToken, autorizaFuncionario],
   (req, res) => pedidoController.finishCookOrder(req, res),
 );
+
+// Cartao
+const cartaoController = new CartaoController();
+routes.get('/cartao/', verificaToken, (req, res) => {
+  cartaoController.index(req, res);
+});
+routes.post('/cartao/create', verificaToken, (req, res) => {
+  cartaoController.create(req, res);
+});
+routes.put('/cartao/update/:numero', verificaToken, (req, res) => {
+  cartaoController.update(req, res);
+});
+routes.delete('/cartao/delete/:numero', verificaToken, (req, res) => {
+  cartaoController.destroy(req, res);
+});
 
 module.exports = routes;
