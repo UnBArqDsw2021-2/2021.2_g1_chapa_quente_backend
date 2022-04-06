@@ -1,17 +1,10 @@
 const mongoose = require('mongoose');
+const { Estado } = require('../utils/estadoPedido');
 
 const pedidoSchema = new mongoose.Schema(
   {
     estado: {
-      enum: [
-        'Carrinho',
-        'Pronto para fazer',
-        'Preparando',
-        'Coleta',
-        'Rota de entrega',
-        'Concluido',
-        'Pronto para Coleta',
-      ],
+      enum: Estado,
       type: String,
     },
     combo: {
