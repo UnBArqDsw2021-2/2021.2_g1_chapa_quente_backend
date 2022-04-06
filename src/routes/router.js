@@ -14,6 +14,7 @@ const { AdicionalController } = require('../controller/adicionalController');
 const { SobremesaController } = require('../controller/sobremesaController');
 const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
+const { CartaoController } = require('../controller/cartaoController');
 
 const routes = new Router();
 
@@ -214,5 +215,21 @@ routes.delete(
     sobremesaController.deletarItem(req, res);
   },
 );
+
+// Cartao
+const cartaoController = new CartaoController();
+routes.get('/cartao/', verificaToken, (req, res) => {
+  cartaoController.index(req, res);
+});
+routes.post('/cartao/create', verificaToken, (req, res) => {
+  cartaoController.create(req, res);
+});
+routes.put('/cartao/update/:numero', verificaToken, (req, res) => {
+  cartaoController.update(req, res);
+});
+routes.delete('/cartao/delete/:numero', verificaToken, (req, res) => {
+  cartaoController.destroy(req, res);
+});
+
 
 module.exports = routes;
