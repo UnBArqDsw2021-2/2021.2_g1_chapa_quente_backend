@@ -3,7 +3,10 @@ const { pessoaSchema } = require('./pessoa');
 const { extend } = require('../utils/extend');
 
 const clienteSchema = extend(pessoaSchema, {
-  endereco: String,
+  enderecoId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  }
 });
 
 const Cliente = mongoose.model('Client', clienteSchema);
