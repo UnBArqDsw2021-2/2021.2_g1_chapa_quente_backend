@@ -16,6 +16,7 @@ const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
 const { PedidoController } = require('../controller/pedidoController');
 const { CartaoController } = require('../controller/cartaoController');
+const autorizaEntregador = require('../midllewares/autorizaEntregador');
 
 const routes = new Router();
 
@@ -224,6 +225,9 @@ routes.get('/order', verificaToken, (req, res) => {
 });
 routes.get('/order/find/:id', verificaToken, (req, res) => {
   pedidoController.getOrder(req, res);
+});
+routes.get('/order/details/:id', [verificaToken, autorizaEntregador], (req, res) => {
+  pedidoController.getOrderDetails(req, res);
 });
 routes.post('/order/create', verificaToken, (req, res) => {
   pedidoController.createOrder(req, res);

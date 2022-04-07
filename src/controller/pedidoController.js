@@ -1,11 +1,43 @@
+const { Types } = require('mongoose');
 const { Pedido } = require('../model/pedido');
 const { Estado } = require('../utils/estadoPedido');
 
+const ObjectId = Types.ObjectId;
 class PedidoController {
   Model;
 
   constructor() {
     this.Model = Pedido;
+  }
+
+  async getOrderDetails(req, res) {
+    const { id } = req.params;
+    try {
+      const dadosPedido = await this.Model.aggregate([
+        { $match: { _id: ObjectId(id) } },
+        {
+          $lookup: {
+            from: "clients",
+            localField: "clienteId",
+            foreignField: "_id",
+            as: "dadosCliente"
+          },
+        },
+        {$unwind:'$dadosCliente'},
+        {
+          $project: {
+            "dadosCliente._id": 0,
+            "dadosCliente.email": 0,
+            "dadosCliente.senha": 0,
+            "dadosCliente.cpf": 0,
+            "dadosCliente.telefone": 0,
+          }
+        }
+      ])
+      return res.send(dadosPedido);
+    } catch (err) {
+      return res.send({ err: err.message });
+    }
   }
 
   async getOrder(req, res) {
