@@ -1,11 +1,43 @@
+const { Types } = require('mongoose');
 const { Pedido } = require('../model/pedido');
 const { Estado } = require('../utils/estadoPedido');
 
+const ObjectId = Types.ObjectId;
 class PedidoController {
   Model;
 
   constructor() {
     this.Model = Pedido;
+  }
+
+  async getOrderDetails(req, res) {
+    const { id } = req.params;
+    try {
+      const dadosPedido = await this.Model.aggregate([
+        { $match: { _id: ObjectId(id) } },
+        {
+          $lookup: {
+            from: "clients",
+            localField: "clienteId",
+            foreignField: "_id",
+            as: "dadosCliente"
+          },
+        },
+        {$unwind:'$dadosCliente'},
+        {
+          $project: {
+            "dadosCliente._id": 0,
+            "dadosCliente.email": 0,
+            "dadosCliente.senha": 0,
+            "dadosCliente.cpf": 0,
+            "dadosCliente.telefone": 0,
+          }
+        }
+      ])
+      return res.send(dadosPedido);
+    } catch (err) {
+      return res.send({ err: err.message });
+    }
   }
 
   async getOrder(req, res) {
@@ -35,6 +67,16 @@ class PedidoController {
       return res.send(toDoOrders);
     } catch (err) {
       return res.status(400).send({ erro: err.message });
+    }
+  }
+
+  async getClientOrdersList(req, res) {
+    const { id } = req.params;
+    try {
+      const orders = await this.Model.find({ clienteId: id });
+      return res.send(orders);
+    } catch (e) {
+      return res.send({ erro: err.message });
     }
   }
 
@@ -108,10 +150,11 @@ class PedidoController {
   }
 
   async updateOrder(req, res) {
+    const { id } = req.params;
     const { estado, entregador } = req.body;
 
     try {
-      const updatedOrder = await this.Model.findOneAndUpdate(
+      const updatedOrder = await this.Model.findOneAndUpdate({ _id: id },
         {
           estado,
           entregador,
