@@ -43,7 +43,7 @@ class PedidoController {
   async getOrder(req, res) {
     const { id } = req.params;
     try {
-      const order = await this.Model.findOne({ id });
+      const order = await this.Model.findOne({ _id: id });
       return res.send(order);
     } catch (err) {
       return res.status(400).send({ erro: err.message });
@@ -171,7 +171,7 @@ class PedidoController {
     const { id } = req.params;
 
     try {
-      const deletedOrder = await this.Model.deleteOne({ id });
+      const deletedOrder = await this.Model.deleteOne({ _id: id });
       return res.status(204).send(deletedOrder);
     } catch (err) {
       return res.status(400).send({ erro: err.message });
