@@ -14,6 +14,7 @@ const { AdicionalController } = require('../controller/adicionalController');
 const { SobremesaController } = require('../controller/sobremesaController');
 const { SanduicheController } = require('../controller/sanduicheController');
 const { BebidaController } = require('../controller/bebidaController');
+const { PedidoController } = require('../controller/pedidoController');
 const { CartaoController } = require('../controller/cartaoController');
 
 const routes = new Router();
@@ -216,6 +217,47 @@ routes.delete(
   },
 );
 
+// Pedido
+const pedidoController = new PedidoController();
+routes.get('/order', verificaToken, (req, res) => {
+  pedidoController.getOrders(req, res);
+});
+routes.get('/order/find/:id', verificaToken, (req, res) => {
+  pedidoController.getOrder(req, res);
+});
+routes.post('/order/create', verificaToken, (req, res) => {
+  pedidoController.createOrder(req, res);
+});
+routes.put(
+  '/order/update/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => {
+    pedidoController.updateOrder(req, res);
+  },
+);
+routes.delete(
+  '/order/delete/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => {
+    pedidoController.deleteOrder(req, res);
+  },
+);
+routes.get('/order/to-do', [verificaToken, autorizaFuncionario], (req, res) => {
+  pedidoController.getToDoOrders(req, res);
+});
+routes.post(
+  '/order/start/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => {
+    pedidoController.startOrder(req, res);
+  },
+);
+routes.post(
+  '/order/finishcook/:id',
+  [verificaToken, autorizaFuncionario],
+  (req, res) => pedidoController.finishCookOrder(req, res),
+);
+
 // Cartao
 const cartaoController = new CartaoController();
 routes.get('/cartao/', verificaToken, (req, res) => {
@@ -230,6 +272,5 @@ routes.put('/cartao/update/:numero', verificaToken, (req, res) => {
 routes.delete('/cartao/delete/:numero', verificaToken, (req, res) => {
   cartaoController.destroy(req, res);
 });
-
 
 module.exports = routes;
