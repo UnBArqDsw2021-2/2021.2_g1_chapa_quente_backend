@@ -70,6 +70,16 @@ class PedidoController {
     }
   }
 
+  async getClientOrdersList(req, res) {
+    const { id } = req.params;
+    try {
+      const orders = await this.Model.find({ clienteId: id });
+      return res.send(orders);
+    } catch (e) {
+      return res.send({ erro: err.message });
+    }
+  }
+
   async startOrder(req, res) {
     try {
       const { id } = req.params;
@@ -140,10 +150,11 @@ class PedidoController {
   }
 
   async updateOrder(req, res) {
+    const { id } = req.params;
     const { estado, entregador } = req.body;
 
     try {
-      const updatedOrder = await this.Model.findOneAndUpdate(
+      const updatedOrder = await this.Model.findOneAndUpdate({ _id: id },
         {
           estado,
           entregador,

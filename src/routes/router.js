@@ -229,6 +229,9 @@ routes.get('/order/find/:id', verificaToken, (req, res) => {
 routes.get('/order/details/:id', [verificaToken, autorizaEntregador], (req, res) => {
   pedidoController.getOrderDetails(req, res);
 });
+routes.get('/order/client/:id', [verificaToken], (req, res) => {
+  pedidoController.getClientOrdersList(req, res);
+})
 routes.post('/order/create', verificaToken, (req, res) => {
   pedidoController.createOrder(req, res);
 });
