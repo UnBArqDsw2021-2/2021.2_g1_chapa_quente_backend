@@ -5,7 +5,7 @@ class PessoaController {
 
   constructor(options) {
     if (this.constructor === PessoaController) {
-      throw new Error('Classe Abstrata não pode ser implementada!');
+      throw new Error('Classe Abstrata não pode ser instanciada!');
     }
     const { Model } = options;
 

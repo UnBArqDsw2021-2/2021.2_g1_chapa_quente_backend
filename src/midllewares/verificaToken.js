@@ -8,6 +8,7 @@ const verificaToken = (req, res, next) => {
     const payload = jwt.validate(token);
 
     req.pessoaId = payload.id;
+    req.tipo = payload.tipo;
     next();
   } catch (err) {
     res.status(401).send({ erro: 'Token Inválido' });
