@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 const { Estado } = require('../utils/estadoPedido');
+const { RastreioEntregador } = require('../utils/rastreioEntregador');
 
 const pedidoSchema = new mongoose.Schema(
   {
     estado: {
       enum: Estado,
+      type: String,
+    },
+    rastreio: {
+      enum: RastreioEntregador,
       type: String,
     },
     combo: {

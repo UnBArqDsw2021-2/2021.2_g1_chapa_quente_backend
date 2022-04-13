@@ -264,6 +264,14 @@ routes.post(
   [verificaToken, autorizaFuncionario],
   (req, res) => pedidoController.finishCookOrder(req, res),
 );
+routes.put(
+  '/order/track/:id',
+  [verificaToken, autorizaEntregador],
+  (req, res) => {
+    pedidoController.updateTrack(req, res);
+  },
+);
+
 
 // Cartao
 const cartaoController = new CartaoController();

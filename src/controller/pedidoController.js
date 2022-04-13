@@ -1,6 +1,8 @@
 const { Types } = require('mongoose');
 const { Pedido } = require('../model/pedido');
 const { Estado } = require('../utils/estadoPedido');
+const { RastreioEntregador } = require('../utils/rastreioEntregador');
+
 
 const ObjectId = Types.ObjectId;
 class PedidoController {
@@ -128,6 +130,7 @@ class PedidoController {
     } = req.body;
 
     const createdOrder = new this.Model({
+      rastreio: RastreioEntregador.SemOPedido,
       estado: Estado.ProntoParaFazer,
       combo,
       sanduiche,
@@ -162,6 +165,23 @@ class PedidoController {
         { new: true },
       );
       return res.send(updatedOrder);
+    } catch (err) {
+      return res.status(400).send({ err: err.message });
+    }
+  }
+  
+  async updateTrack(req, res){
+    const { id } = req.params;
+    const { rastreio } = req.body;
+
+    try {
+      const updateTrack = await this.Model.findOneAndUpdate({ _id: id },
+        {
+          rastreio,
+        },
+        { new: true },
+      );
+      return res.send(updateTrack);
     } catch (err) {
       return res.status(400).send({ err: err.message });
     }
