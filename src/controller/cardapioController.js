@@ -21,7 +21,7 @@ class CardapioController {
     const { id } = req.params;
 
     try {
-      const itens = await this.Model.findOne({ id });
+      const itens = await this.Model.findOne({ _id: id });
       res.send(itens);
     } catch (err) {
       res.send({ err: err.message });
@@ -43,7 +43,7 @@ class CardapioController {
 
     try {
       const itemAtualizado = await this.Model.findOneAndUpdate(
-        { id },
+        { _id: id },
         updateParams,
         { new: true },
       );
@@ -57,7 +57,7 @@ class CardapioController {
     const { id } = req.params;
 
     try {
-      const itemRemovido = await this.Model.deleteOne({ id });
+      const itemRemovido = await this.Model.deleteOne({ _id: id });
       res.status(204).send(itemRemovido);
     } catch (err) {
       res.send({ erro: err.message });
