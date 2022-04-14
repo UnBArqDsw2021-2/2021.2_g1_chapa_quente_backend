@@ -17,6 +17,8 @@ class ClienteController extends PessoaController {
     const { nome, telefone, email, senha, cpf, endereco } = req.body;
 
     try {
+      validator.validatePassword(senha);
+      
       const { rua, numero, complemento, bairro, cidade } = endereco;
       const enderecoObject = new Endereco(rua, numero, complemento);
   
@@ -32,8 +34,6 @@ class ClienteController extends PessoaController {
         cpf,
         enderecoId: enderecoSalvo.id,
       });
-
-      validator.validatePassword(senha);
 
       const clienteSalvo = await cliente.save();
 
