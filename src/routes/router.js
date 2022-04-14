@@ -100,7 +100,7 @@ routes.delete(
 
 // Adicional
 const adicionalController = new AdicionalController();
-routes.get('/adicional/', verificaToken, (req, res) => {
+routes.get('/adicional/', (req, res) => {
   adicionalController.itensCardapio(req, res);
 });
 routes.get('/adicional/:id', verificaToken, (req, res) => {
@@ -190,7 +190,7 @@ routes.delete(
 
 // Sobremesa
 const sobremesaController = new SobremesaController();
-routes.get('/sobremesa/', verificaToken, (req, res) => {
+routes.get('/sobremesa/', (req, res) => {
   sobremesaController.itensCardapio(req, res);
 });
 routes.get('/sobremesa/:id', verificaToken, (req, res) => {
@@ -226,12 +226,16 @@ routes.get('/order', verificaToken, (req, res) => {
 routes.get('/order/find/:id', verificaToken, (req, res) => {
   pedidoController.getOrder(req, res);
 });
-routes.get('/order/details/:id', [verificaToken, autorizaEntregador], (req, res) => {
-  pedidoController.getOrderDetails(req, res);
-});
+routes.get(
+  '/order/details/:id',
+  [verificaToken, autorizaEntregador],
+  (req, res) => {
+    pedidoController.getOrderDetails(req, res);
+  },
+);
 routes.get('/order/client/:id', [verificaToken], (req, res) => {
   pedidoController.getClientOrdersList(req, res);
-})
+});
 routes.post('/order/create', verificaToken, (req, res) => {
   pedidoController.createOrder(req, res);
 });
