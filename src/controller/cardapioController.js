@@ -1,4 +1,3 @@
-const res = require('express/lib/response');
 const { Cardapio } = require('../model/cardapio');
 
 class CardapioController {
@@ -28,7 +27,7 @@ class CardapioController {
     }
   }
 
-  async itensCardapio(req, res) {
+  async itensCardapio(_req, res) {
     try {
       const result = await this.Model.find();
       res.send(result);

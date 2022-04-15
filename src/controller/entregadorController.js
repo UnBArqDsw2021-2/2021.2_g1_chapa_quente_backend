@@ -1,10 +1,11 @@
 const { Entregador } = require('../model/entregador');
+const validator = require('../utils/validator');
 const PessoaController = require('./pessoaController');
 
 class EntregadorController extends PessoaController {
   constructor(options) {
     if (options) {
-      super(options)
+      super(options);
     } else {
       super({ Model: Entregador });
     }
@@ -23,6 +24,8 @@ class EntregadorController extends PessoaController {
     });
 
     try {
+      validator.validatePassword(senha);
+
       const entregadorSalvo = await entregador.save();
 
       res.status(201).send(entregadorSalvo);

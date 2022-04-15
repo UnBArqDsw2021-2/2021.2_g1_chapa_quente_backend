@@ -1,10 +1,11 @@
 const { Funcionario } = require('../model/funcionario');
 const PessoaController = require('./pessoaController');
+const validator = require('../utils/validator');
 
 class FuncionarioController extends PessoaController {
   constructor(options) {
     if (options) {
-      super(options)
+      super(options);
     } else {
       super({ Model: Funcionario });
     }
@@ -23,6 +24,8 @@ class FuncionarioController extends PessoaController {
     });
 
     try {
+      validator.validatePassword(senha);
+
       const funcionarioSalvo = await funcionario.save();
 
       res.status(201).send(funcionarioSalvo);
