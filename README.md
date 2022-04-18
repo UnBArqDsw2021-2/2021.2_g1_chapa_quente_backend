@@ -34,11 +34,21 @@ Primeiramente é necessario clonar o projeto e entrar na pasta raiz.
 git clone https://github.com/UnBArqDsw2021-2/2021.2_g1_chapa_quente_backend.git
 cd 2021.2_g1_chapa_quente_backend
 ```
+Antes de rodar o projeto, primeiro é necessário configurar as váriaveis de ambiente usadas no projeto, para isso, crie um arquivo chamado .env na pasta raíz do projeto e coloque as seguintes variáveis:
+
+```
+MONGO_CONNECTION=mongodb+srv://chapa_quente_dev:chapaquente@cluster0.4fwy8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+PORT=3333
+```
+
+**Obs:** O variável MONGO_CONNECTION se refere ao banco de desenvolvimento e testes do projeto, caso queira fazer alterações no código e testar mais exaustivamente, é recomendado que crie e use um banco próprio para teste, aqui segue um tutorial: https://www.coderrocketfuel.com/article/create-and-connect-to-a-mongodb-atlas-database-with-node-js
 
 Para rodar o projeto na primeira vez é necessario o comando abaixo.
+
 ```
 make build
 ```
+
 Para rodar outras vezes basta rodar o comando abaixo
 ```
 make run
